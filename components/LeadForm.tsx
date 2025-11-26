@@ -6,6 +6,13 @@ interface LeadFormProps {
   onSuccess: () => void;
 }
 
+// ==========================================
+// CONFIGURATION - Edit webhook URL here
+// ==========================================
+const WEBHOOK_URL = "https://n8n.srv981504.hstgr.cloud/webhook/petstar-landing-page-offer"; // Optional: Add your webhook URL here (e.g., n8n, Zapier, Make)
+// Example: "https://n8n.srv981504.hstgr.cloud/webhook/petstar-lead"
+// ==========================================
+
 export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -44,37 +51,53 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
         source: window.location.href
       };
 
-      // 3. Send to PHP Backend (Hostinger)
-      // This expects a 'mail.php' file to exist in the same directory as the index.html
-      const response = await fetch('./mail.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+      // 3. Send to PHP Backend (Email) and Webhook simultaneously
+      const requests: Promise<Response>[] = [];
+
+      // Always send to PHP backend for email
+      requests.push(
+        fetch('./mail.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        })
+      );
+
+      // Send to webhook if configured
+      if (WEBHOOK_URL) {
+        requests.push(
+          fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          })
+        );
+      }
+
+      // Execute all requests in parallel
+      const results = await Promise.allSettled(requests);
+      
+      // Log results for debugging
+      results.forEach((result, index) => {
+        if (result.status === 'rejected') {
+          console.warn(`Request ${index} failed:`, result.reason);
+        } else if (!result.value.ok) {
+          console.warn(`Request ${index} returned non-200 status`);
+        }
       });
 
-      // Optional: You can also keep the webhook call here if you want data in both places
-      // await fetch('https://n8n.srv981504.hstgr.cloud/webhook/...', ...);
-
-      if (response.ok) {
-        // Success logic
-        setTimeout(() => {
-          setLoading(false);
-          onSuccess();
-        }, 500);
-      } else {
-        // Even if PHP fails (e.g. local dev environment), we usually let the user proceed 
-        // on a landing page to not block the coupon.
-        console.warn('Email script returned non-200 status');
-        setTimeout(() => {
-          setLoading(false);
-          onSuccess();
-        }, 500);
-      }
+      // Always redirect to thank you page regardless of API results
+      // (Better UX - don't block user from getting their coupon)
+      setLoading(false);
+      onSuccess();
 
     } catch (error) {
       console.error('Submission error:', error);
+      // Still redirect on error to not frustrate the user
       setLoading(false);
       onSuccess();
     }
