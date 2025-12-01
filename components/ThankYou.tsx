@@ -23,7 +23,7 @@ export const ThankYou: React.FC = () => {
         <div className="container mx-auto flex justify-center">
           <img 
             src="https://static.wixstatic.com/media/bd5414_6b03330d2f07475cbdc4f039130edbc3~mv2.png/v1/fill/w_188,h_116,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20petstar.png" 
-            alt="Pet Star Mobile Grooming" 
+            alt="Petstar Mobile Grooming" 
             className="h-16 object-contain"
           />
         </div>
@@ -78,12 +78,12 @@ export const ThankYou: React.FC = () => {
 
           {/* Secondary Actions */}
           <div className="mt-6 flex items-center justify-center gap-4 text-sm">
-            <a href="tel:+15555555555" className="text-gray-500 hover:text-brand-primary flex items-center gap-1 transition-colors">
+            <a href="tel:+16507274673" className="text-gray-500 hover:text-brand-primary flex items-center gap-1 transition-colors">
               <Phone className="w-4 h-4" />
               Call
             </a>
             <span className="text-gray-300">|</span>
-            <a href="sms:+15555555555" className="text-gray-500 hover:text-brand-primary flex items-center gap-1 transition-colors">
+            <a href="sms:+16507274673" className="text-gray-500 hover:text-brand-primary flex items-center gap-1 transition-colors">
               <MessageSquare className="w-4 h-4" />
               Text
             </a>
@@ -95,7 +95,7 @@ export const ThankYou: React.FC = () => {
       {/* Simple Footer */}
       <footer className="py-6 text-center">
         <p className="text-xs text-gray-400">
-          © {new Date().getFullYear()} Pet Star Mobile Grooming
+          © {new Date().getFullYear()} Petstar Mobile Grooming
         </p>
       </footer>
     </div>

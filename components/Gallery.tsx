@@ -1,71 +1,208 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Section } from './Section';
-import { BeforeAfterItem } from '../types';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const galleryItems: BeforeAfterItem[] = [
+interface GalleryItem {
+  id: number;
+  petName: string;
+  description: string;
+  beforeImg: string;
+  afterImg: string;
+  isHighlight?: boolean;
+  imgPosition?: string;
+}
+
+const galleryItems: GalleryItem[] = [
   {
     id: 1,
-    petName: "Max",
-    description: "Golden Doodle, looking sharp after his full-service grooming.",
-    beforeImg: "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&auto=format&fit=crop&q=60", 
-    afterImg: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=600&auto=format&fit=crop&q=60" 
+    petName: "Tartar Removal",
+    description: "Safe, non-anesthetic dental cleaning<br/>for healthier teeth.",
+    beforeImg: "/offer/tartar before.webp",
+    afterImg: "/offer/tartar after.webp",
+    isHighlight: true
   },
   {
     id: 2,
-    petName: "Bella",
-    description: "Maltese, pampered to perfection.",
-    beforeImg: "https://images.unsplash.com/photo-1596492784531-6e6eb5ea92f5?w=600&auto=format&fit=crop&q=60", 
-    afterImg: "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=600&auto=format&fit=crop&q=60" 
+    petName: "Full Grooming",
+    description: "Complete transformation with bath,<br/>haircut, and styling.",
+    beforeImg: "/offer/dog 1 before.webp",
+    afterImg: "/offer/dog 1 after.webp"
   },
   {
     id: 3,
-    petName: "Whiskers",
-    description: "Our feline friend, feeling fresh with a professional trim.",
-    beforeImg: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&auto=format&fit=crop&q=60", 
-    afterImg: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&auto=format&fit=crop&q=60" 
+    petName: "Coat Refresh",
+    description: "De-matting and professional<br/>coat care.",
+    beforeImg: "/offer/dog 2 before.webp",
+    afterImg: "/offer/dog 2 after.webp"
+  },
+  {
+    id: 4,
+    petName: "Style & Trim",
+    description: "Breed-specific cuts with<br/>attention to detail.",
+    beforeImg: "/offer/dog 3 before.webp",
+    afterImg: "/offer/dog 3 after.webp"
   }
 ];
 
 export const Gallery: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setVisibleCount(3);
+      else if (window.innerWidth >= 768) setVisibleCount(2);
+      else setVisibleCount(1);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % galleryItems.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying]);
+
+  const nextSlide = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev + 1) % galleryItems.length);
+  };
+
+  const prevSlide = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
+  };
+
+  const getVisibleItems = () => {
+    const items = [];
+    for (let i = 0; i < visibleCount; i++) {
+      items.push(galleryItems[(currentIndex + i) % galleryItems.length]);
+    }
+    return items;
+  };
+
   return (
     <Section id="gallery" pattern>
-      <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-brand-primary mb-4 font-fun">Before & After</h2>
-        <p className="text-gray-600 text-lg">Explore our gallery of happy clients. We bring out the best in every pet!</p>
+      <div className="text-center mb-10">
+        <h2 className="text-4xl md:text-5xl font-bold text-brand-primary mb-4 font-fun">Real Results</h2>
+        <p className="text-gray-600 text-lg">See the amazing transformations from our mobile grooming sessions!</p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {galleryItems.map((item) => (
-          <div key={item.id} className="bg-white rounded-3xl shadow-xl overflow-hidden border-4 border-white transform hover:-translate-y-2 transition-transform duration-300">
-            <div className="relative h-72 flex">
-                <div className="w-1/2 relative group border-r border-white">
-                    <img src={item.beforeImg} alt={`${item.petName} Before`} className="w-full h-full object-cover" />
-                    <div className="absolute top-3 left-3 bg-gray-900/70 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full">BEFORE</div>
+      {/* Carousel */}
+      <div className="relative max-w-6xl mx-auto">
+        {/* Navigation Buttons */}
+        <button 
+          onClick={prevSlide}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-1.5 md:p-3 hover:bg-gray-50 transition-colors"
+          aria-label="Previous"
+        >
+          <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-brand-primary" />
+        </button>
+        
+        <button 
+          onClick={nextSlide}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-1.5 md:p-3 hover:bg-gray-50 transition-colors"
+          aria-label="Next"
+        >
+          <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-brand-primary" />
+        </button>
+
+        {/* Cards Grid */}
+        <div className={`grid gap-6 px-6 md:px-8 lg:px-4 ${visibleCount === 3 ? 'grid-cols-3' : visibleCount === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          {getVisibleItems().map((item, index) => (
+            <div 
+              key={`${currentIndex}-${index}`}
+              className={`bg-white rounded-2xl shadow-xl overflow-hidden border-2 transition-all duration-500 ${
+                item.isHighlight ? 'border-yellow-400 ring-2 ring-yellow-400/20' : 'border-gray-100'
+              }`}
+            >
+              {/* Highlight badge for Tartar Removal */}
+              {item.isHighlight && (
+                <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-brand-dark text-center py-1.5 font-bold text-xs flex items-center justify-center gap-1">
+                  <Star className="w-3 h-3 fill-current" /> Premium <Star className="w-3 h-3 fill-current" />
                 </div>
-                <div className="w-1/2 relative">
-                    <img src={item.afterImg} alt={`${item.petName} After`} className="w-full h-full object-cover" />
-                    <div className="absolute top-3 right-3 bg-brand-secondary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">AFTER</div>
+              )}
+              
+              <div className="relative flex h-[320px]">
+                <div className="w-1/2 relative border-r border-white h-full">
+                  <img src={item.beforeImg} alt={`${item.petName} Before`} className="w-full h-[320px] object-cover" />
+                  <div className="absolute top-2 left-2 bg-gray-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full">BEFORE</div>
                 </div>
-                
-                {/* Interactive slider hint */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="bg-white/20 backdrop-blur-md p-2 rounded-full border border-white/50">
-                        <div className="w-1 h-8 bg-white/80 rounded-full"></div>
-                    </div>
+                <div className="w-1/2 relative h-full">
+                  <img src={item.afterImg} alt={`${item.petName} After`} className="w-full h-[320px] object-cover" />
+                  <div className="absolute top-2 right-2 bg-brand-secondary text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">AFTER</div>
                 </div>
-            </div>
-            <div className="p-6 bg-white">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-bold text-2xl text-brand-primary font-fun">{item.petName}</h3>
-                <div className="h-1 w-12 bg-brand-secondary rounded-full"></div>
               </div>
-              <p className="text-gray-600 italic">"{item.description}"</p>
+              
+              <div className="p-4 bg-white text-center">
+                <h3 className="font-bold text-lg text-brand-primary font-fun mb-1">{item.petName}</h3>
+                <p className="text-gray-600 text-sm" dangerouslySetInnerHTML={{ __html: item.description }}></p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="flex justify-center gap-2 mt-6">
+          {galleryItems.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => { setIsAutoPlaying(false); setCurrentIndex(index); }}
+              className={`w-3 h-3 rounded-full transition-all ${
+                index === currentIndex ? 'bg-brand-secondary w-8' : 'bg-gray-300'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
-      
-      <p className="text-center text-xs text-gray-400 mt-12">*Images are for demonstration.</p>
+
+      {/* Van showcase + Meet Groomer */}
+      <div className="mt-12 rounded-3xl shadow-2xl overflow-hidden">
+        {/* Photos - contained in own block */}
+        <div className="grid grid-cols-2 gap-1">
+          <img 
+            src="/offer/2 van petstar.webp" 
+            alt="Petstar Mobile Grooming Van" 
+            className="w-full h-[350px] md:h-[400px] object-cover"
+          />
+          <img 
+            src="/offer/dog in front of van.webp" 
+            alt="Happy dog after grooming" 
+            className="w-full h-[350px] md:h-[400px] object-cover"
+          />
+        </div>
+        {/* Text - separate block with solid background */}
+        <div className="bg-brand-primary p-6 md:p-8 text-white">
+          <h3 className="text-2xl md:text-3xl font-bold mb-2 font-fun">Meet Your Groomer</h3>
+          <p className="text-yellow-300 text-xs md:text-sm font-semibold mb-4">
+            Maycon • 500+ pets groomed • Since 2019
+          </p>
+          <p className="text-blue-100 leading-relaxed mb-4 text-sm md:text-base">
+            Specialized in anxious, senior, and reactive pets. Certified in low-stress handling techniques. 
+            Our fully-equipped van brings the salon experience directly to your driveway.
+          </p>
+          <ul className="space-y-2 text-sm text-blue-100">
+            <li className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-brand-secondary rounded-full flex-shrink-0"></span>
+              Climate controlled for all seasons
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-brand-secondary rounded-full flex-shrink-0"></span>
+              Professional grooming equipment
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-brand-secondary rounded-full flex-shrink-0"></span>
+              Sanitized between each appointment
+            </li>
+          </ul>
+        </div>
+      </div>
     </Section>
   );
 };

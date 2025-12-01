@@ -128,8 +128,11 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
       <h3 className="text-3xl md:text-4xl font-bold text-brand-primary mb-2 font-fun">
         Get $15 OFF
       </h3>
-      <p className="text-gray-600 mb-6 leading-relaxed">
-        Your first stress-free mobile grooming session. Claim your voucher now!
+      <p className="text-gray-600 mb-2 leading-relaxed">
+        Your first stress-free mobile grooming session.
+      </p>
+      <p className="text-xs text-brand-secondary font-semibold mb-4">
+        ⚡ Limited spots weekly — claim before we're fully booked!
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -214,7 +217,10 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
             "CLAIM $15 DISCOUNT"
           )}
         </Button>
-        <p className="text-xs text-center text-gray-400 mt-2">
+        <p className="text-xs text-center text-gray-500 mt-2">
+          Book instantly on the next page — takes less than 3 minutes!
+        </p>
+        <p className="text-xs text-center text-gray-400 mt-1">
           We respect your privacy. No spam, ever.
         </p>
       </form>

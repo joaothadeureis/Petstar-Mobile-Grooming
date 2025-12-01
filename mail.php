@@ -28,11 +28,12 @@ $smtp_port = 465;
 
 // Recipients (add multiple emails if needed)
 $recipients = [
-    "contact@wedomarketing.pro"
+    "contact@wedomarketing.pro",
+    "petstarmobilegrooming@gmail.com"
 ];
 
-// Webhook URL (optional - leave empty to disable)
-$webhook_url = ""; // Example: "https://n8n.srv981504.hstgr.cloud/webhook/petstar-lead"
+// Webhook URL - DISABLED (webhook is called from React frontend to avoid duplicate calls)
+$webhook_url = "";
 
 // ==================================
 // END CONFIGURATION

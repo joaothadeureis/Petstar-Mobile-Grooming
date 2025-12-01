@@ -14,6 +14,7 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Internal anchor links only - no external links
   const navLinks = [
     { name: 'Why Us', href: '#why-us' },
     { name: 'Services', href: '#services' },
@@ -22,21 +23,25 @@ export const Navbar: React.FC = () => {
     { name: 'FAQ', href: '#faq' },
   ];
 
+  const scrollToHero = () => {
+    document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 font-fun ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
+      className={`sticky left-0 w-full z-50 transition-all duration-300 font-fun ${
+        isScrolled ? 'top-[28px] md:top-[32px] bg-white/95 backdrop-blur-md shadow-md py-2' : 'top-[28px] md:top-[32px] bg-brand-primary py-3 md:py-4'
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex-shrink-0 bg-white rounded-lg p-1">
+        {/* Logo - scrolls to top */}
+        <button onClick={scrollToHero} className="flex-shrink-0 bg-white rounded-lg p-1 cursor-pointer">
           <img 
             src="https://static.wixstatic.com/media/bd5414_6b03330d2f07475cbdc4f039130edbc3~mv2.png/v1/fill/w_188,h_116,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20petstar.png" 
-            alt="Pet Star Mobile Grooming" 
-            className="h-12 md:h-14 w-auto object-contain"
+            alt="Petstar Mobile Grooming" 
+            className="h-10 md:h-14 w-auto object-contain"
           />
-        </a>
+        </button>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
@@ -45,14 +50,14 @@ export const Navbar: React.FC = () => {
               key={link.name} 
               href={link.href}
               className={`font-medium text-lg hover:text-brand-secondary transition-colors ${
-                isScrolled ? 'text-brand-primary' : 'text-brand-primary md:text-white lg:text-white' // Assuming hero bg is dark
+                isScrolled ? 'text-brand-primary' : 'text-brand-primary md:text-white lg:text-white'
               }`}
               style={{ textShadow: isScrolled ? 'none' : '0 2px 4px rgba(0,0,0,0.3)' }}
             >
               {link.name}
             </a>
           ))}
-          <Button variant="primary" size="sm" onClick={() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth'})}>
+          <Button variant="primary" size="sm" onClick={scrollToHero}>
             Book Now
           </Button>
         </div>
@@ -81,15 +86,15 @@ export const Navbar: React.FC = () => {
               </a>
             ))}
             <a 
-              href="tel:+15555555555" 
+              href="tel:+16507274673" 
               className="flex items-center gap-2 text-brand-secondary font-bold py-2 text-lg"
             >
               <Phone className="w-5 h-5" />
-              (555) 123-4567
+              (650) 727-4673
             </a>
             <Button fullWidth variant="primary" onClick={() => {
               setMobileMenuOpen(false);
-              document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth'});
+              scrollToHero();
             }}>
               Claim $15 Discount
             </Button>

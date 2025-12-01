@@ -1,6 +1,6 @@
 import React from 'react';
 import { LeadForm } from './LeadForm';
-import { CheckCircle, MapPin } from 'lucide-react';
+import { MapPin, Sparkles, Star, Shield, Clock, Heart } from 'lucide-react';
 
 interface HeroProps {
   onFormSuccess: () => void;
@@ -8,81 +8,144 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onFormSuccess }) => {
   return (
-    <div id="hero" className="relative min-h-screen md:min-h-[800px] flex items-center pt-28 pb-32 md:pt-32 md:pb-48 overflow-hidden">
+    <div id="hero" className="relative min-h-screen md:min-h-[850px] flex items-center pt-16 pb-28 md:pt-20 md:pb-40 overflow-hidden">
       
-      {/* Background Image with Overlay */}
+      {/* Background Image with Premium Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-            src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=2688&auto=format&fit=crop"
-            alt="Happy Dog Grooming" 
-            // object position logic: 
-            // Mobile: 50% x 15% (Center horizontal, Top vertical) -> Keeps face at top, away from bottom form
-            // Desktop: 20% x 50% (Left horizontal, Center vertical) -> Moves dog to left, away from right form
-            className="w-full h-full object-cover object-[50%_15%] md:object-[20%_center]"
+            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=2670&auto=format&fit=crop"
+            alt="Happy Dog" 
+            className="w-full h-full object-cover object-[50%_30%] md:object-[30%_center]"
         />
-        {/* Brand Gradient Overlay */}
-        {/* Adjusted gradient to ensure text readability on the left/top while revealing image on right/bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-brand-primary/90 via-brand-primary/60 to-brand-primary/20 md:to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-brand-primary via-brand-primary/90 to-brand-primary/60 md:to-transparent z-10"></div>
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-brand-secondary/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 right-20 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl"></div>
       </div>
       
       <div className="container mx-auto px-4 md:px-6 relative z-20">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
           
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left text-white">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white px-4 py-2 rounded-full text-sm font-bold tracking-wide mb-6 shadow-lg">
-              <MapPin className="w-4 h-4 text-brand-secondary" /> Serving Peninsula Area
+            
+            {/* Tartar Removal - Top Badge */}
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-brand-dark px-5 py-2.5 rounded-full text-sm font-bold shadow-lg mb-6 animate-pulse">
+              <Sparkles className="w-4 h-4" /> 
+              <span>NEW: Safe Tartar Removal Available</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 drop-shadow-md font-fun">
-              Premier Care.<br/>
-              Zero Stress.<br/>
-              <span className="text-brand-secondary bg-white px-2 rounded-lg transform -rotate-2 inline-block shadow-lg mt-2">We Come to You!</span>
+            {/* Main Headline */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-6 font-fun">
+              <span className="block text-white drop-shadow-lg">Premium Pet</span>
+              <span className="block text-white drop-shadow-lg">Grooming</span>
+              <span className="relative inline-block mt-2">
+                <span className="relative z-10 text-brand-secondary bg-white px-6 py-2 rounded-xl shadow-2xl inline-block transform -rotate-1 font-black">
+                  At Your Door
+                </span>
+              </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-blue-50 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium drop-shadow-sm">
-              Stop wasting hours at noisy salons. Give your pet the calm, personalized, cage-free experience they deserve.
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-white/90 mb-8 font-light">
+              Professional grooming for dogs & cats — calm, gentle, and stress-free.
             </p>
+            
+            {/* Value Props - Premium Style */}
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-8">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                <Shield className="w-4 h-4 text-green-400" />
+                <span className="text-sm font-medium">Cage-Free</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                <Heart className="w-4 h-4 text-pink-400" />
+                <span className="text-sm font-medium">1-on-1 Care</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                <Clock className="w-4 h-4 text-blue-300" />
+                <span className="text-sm font-medium">We Come to You</span>
+              </div>
+            </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start text-base font-bold text-white mb-8">
-              <div className="flex items-center gap-2 bg-brand-dark/30 px-4 py-2 rounded-lg backdrop-blur-sm border border-white/10">
-                <CheckCircle className="text-brand-secondary w-5 h-5 fill-white" /> Cage-Free
+            {/* Regions - Styled Card */}
+            <div className="inline-block mb-6 bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-xl">
+              <div className="flex items-center gap-2 text-white text-sm mb-4 justify-center lg:justify-start">
+                <MapPin className="w-5 h-5 text-brand-secondary" /> 
+                <span className="uppercase tracking-wider text-sm font-bold">Now Serving</span>
               </div>
-              <div className="flex items-center gap-2 bg-brand-dark/30 px-4 py-2 rounded-lg backdrop-blur-sm border border-white/10">
-                <CheckCircle className="text-brand-secondary w-5 h-5 fill-white" /> 1-on-1 Attention
+              <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-2">
+                {['Peninsula', 'San Mateo County', 'Santa Clara County', 'San Francisco'].map((region) => (
+                  <span key={region} className="text-xs font-medium px-3 py-1.5 rounded-full bg-white/20 text-white border border-white/10">
+                    {region}
+                  </span>
+                ))}
               </div>
-              <div className="flex items-center gap-2 bg-brand-dark/30 px-4 py-2 rounded-lg backdrop-blur-sm border border-white/10">
-                <CheckCircle className="text-brand-secondary w-5 h-5 fill-white" /> Fully Self-Contained
+              <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                <span className="text-xs font-medium px-3 py-1.5 rounded-full bg-brand-secondary text-white shadow-md">
+                  Marin County <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded ml-1">NEW</span>
+                </span>
+                <span className="text-xs font-medium px-3 py-1.5 rounded-full bg-white/20 text-white border border-white/10">
+                  South Bay
+                </span>
+                <span className="text-xs font-medium px-3 py-1.5 rounded-full bg-brand-secondary text-white shadow-md">
+                  East Bay <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded ml-1">NEW</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Social Proof */}
+            <div className="flex items-center gap-3 justify-center lg:justify-start">
+              <div className="flex -space-x-2">
+                {[
+                  'photo-1438761681033-6461ffad8d80',
+                  'photo-1494790108377-be9c29b29330',
+                  'photo-1507003211169-0a1dd7228f2d',
+                  'photo-1534528741775-53994a69daeb'
+                ].map((photo, i) => (
+                  <img 
+                    key={i}
+                    src={`https://images.unsplash.com/${photo}?auto=format&fit=crop&w=60&h=60&q=80`} 
+                    alt="" 
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-md" 
+                  />
+                ))}
+              </div>
+              <div className="text-white">
+                <div className="flex items-center gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <span className="text-xs text-white/80">+500 satisfied pet parents</span>
               </div>
             </div>
           </div>
 
           {/* Right Content - The Form */}
-          <div className="w-full max-w-md lg:w-[460px]">
-            <LeadForm onSuccess={onFormSuccess} />
-            {/* Trust Badge below form */}
-            <div className="flex items-center justify-center gap-4 mt-6 opacity-90">
-                <div className="flex -space-x-3">
-                    {[1,2,3].map(i => (
-                        <div key={i} className="w-10 h-10 rounded-full border-2 border-brand-primary bg-gray-200 overflow-hidden">
-                             <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" />
-                        </div>
-                    ))}
-                </div>
-                <div className="text-white text-sm font-medium">
-                    <div className="font-bold">500+ Happy Pets</div>
-                    <div className="text-brand-secondary">★★★★★</div>
-                </div>
+          <div className="w-full max-w-md lg:w-[440px]">
+            <div className="relative">
+              {/* Glow effect behind form */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-brand-secondary/30 to-yellow-400/30 rounded-3xl blur-2xl"></div>
+              <div className="relative">
+                <LeadForm onSuccess={onFormSuccess} />
+              </div>
+            </div>
+            {/* Badge below form */}
+            <div className="text-center mt-5 flex items-center justify-center gap-3 text-white/70 text-sm">
+              <span className="flex items-center gap-1">
+                <Shield className="w-4 h-4 text-green-400" /> Licensed & Insured
+              </span>
+              <span className="w-1 h-1 bg-white/40 rounded-full"></span>
+              <span>Since 2019</span>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Wave Separator at bottom */}
+      {/* Wave Separator */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20">
         <svg 
-            className="relative block w-[calc(100%+1.3px)] h-[50px] md:h-[100px]" 
-            data-name="Layer 1" 
+            className="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[120px]" 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 1200 120" 
             preserveAspectRatio="none"
