@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from './Button';
-import { Calendar, Phone, MessageSquare, Copy, Sparkles, PartyPopper } from 'lucide-react';
+import { Calendar, Phone, MessageSquare, Copy, Sparkles, Clock, AlertCircle } from 'lucide-react';
 
 export const ThankYou: React.FC = () => {
   const [copied, setCopied] = useState(false);
+
+  // Calculate coupon validity dates
+  const { claimedDate, expiryDate, formattedClaimed, formattedExpiry } = useMemo(() => {
+    const claimed = new Date();
+    const expiry = new Date(claimed);
+    expiry.setDate(expiry.getDate() + 7);
+    
+    const formatDate = (date: Date) => {
+      return date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+    };
+    
+    return {
+      claimedDate: claimed,
+      expiryDate: expiry,
+      formattedClaimed: formatDate(claimed),
+      formattedExpiry: formatDate(expiry)
+    };
+  }, []);
 
   const handleBookNow = () => {
     window.open('https://booking.moego.pet/ol/landing?name=PetStarMobileGrooming', '_blank');
@@ -48,7 +70,7 @@ export const ThankYou: React.FC = () => {
           </p>
 
           {/* Coupon Card - Clean design */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 mb-8">
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 mb-6">
             <span className="text-xs font-medium text-gray-400 uppercase tracking-widest">Your Coupon Code</span>
             
             <button 
@@ -63,6 +85,35 @@ export const ThankYou: React.FC = () => {
             <p className={`mt-2 text-xs transition-all ${copied ? 'text-green-600 font-medium' : 'text-gray-400'}`}>
               {copied ? '✓ Copied to clipboard!' : 'Click to copy'}
             </p>
+
+            {/* Validity Period */}
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <div className="flex items-center justify-center gap-2 text-amber-600 mb-2">
+                <Clock className="w-4 h-4" />
+                <span className="text-sm font-semibold">Valid for 1 week only</span>
+              </div>
+              <p className="text-xs text-gray-500">
+                Claimed: <span className="font-medium">{formattedClaimed}</span> → Expires: <span className="font-medium text-brand-secondary">{formattedExpiry}</span>
+              </p>
+            </div>
+          </div>
+
+          {/* How to use notice */}
+          <div className="bg-brand-light rounded-xl p-4 mb-6 text-left">
+            <p className="text-sm text-brand-primary font-medium mb-2">📋 How to use your discount:</p>
+            <p className="text-xs text-gray-600 leading-relaxed">
+              Click the button below to book your appointment. At the end of the booking process, enter your coupon code <span className="font-mono font-bold">PETSTAR15</span> to activate your $15 discount.
+            </p>
+          </div>
+
+          {/* Extension notice */}
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
+            <div className="flex gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-amber-800">
+                Need more time? If you can't book within the 1-week period, contact us and we'll be happy to extend your coupon.
+              </p>
+            </div>
           </div>
 
           {/* Primary CTA */}

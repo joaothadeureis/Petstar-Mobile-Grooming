@@ -66,6 +66,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 $name = sanitize_string($data['name'] ?? '');
 $email_contact = filter_var($data['email'] ?? '', FILTER_SANITIZE_EMAIL);
 $phone = sanitize_string($data['phone'] ?? '');
+$city = sanitize_string($data['city'] ?? '');
 $petName = sanitize_string($data['petName'] ?? '');
 $service = sanitize_string($data['service'] ?? 'Not specified');
 $ip = sanitize_string($data['ip'] ?? 'Unknown');
@@ -97,6 +98,7 @@ if (!empty($webhook_url)) {
             'name' => $name,
             'email' => $email_contact,
             'phone' => $phone,
+            'city' => $city,
             'petName' => $petName,
             'service' => $service,
             'ip' => $ip,
@@ -172,7 +174,7 @@ try {
     );
 
     // Recipients
-    $mail->setFrom($smtp_email, "Pet Star - New Lead");
+    $mail->setFrom($smtp_email, "Petstar - New Lead");
     foreach ($recipients as $recipient) {
         $mail->addAddress($recipient);
     }
@@ -222,6 +224,9 @@ try {
             <span class='label'>Phone:</span> <a href='tel:$phone'>$phone</a>
           </div>
           <div class='field'>
+            <span class='label'>City:</span> $city
+          </div>
+          <div class='field'>
             <span class='label'>Pet's Name:</span> $petName
           </div>
           <div class='field'>
@@ -241,7 +246,7 @@ try {
           </div>
         </div>
         <div class='footer'>
-          Sent via Pet Star Landing Page Form
+          Sent via Petstar Landing Page Form
         </div>
       </div>
     </body>
@@ -251,10 +256,11 @@ try {
     $mail->Body = $body;
 
     // Plain text alternative
-    $mail->AltBody = "New Lead from Pet Star Landing Page\n\n"
+    $mail->AltBody = "New Lead from Petstar Landing Page\n\n"
                    . "Name: $name\n"
                    . "Email: $email_contact\n"
                    . "Phone: $phone\n"
+                   . "City: $city\n"
                    . "Pet's Name: $petName\n"
                    . "Service: $service\n\n"
                    . "IP: $ip\n"

@@ -19,6 +19,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
     name: '',
     email: '',
     phone: '',
+    city: '',
     petName: '',
     service: ''
   });
@@ -135,57 +136,67 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
         ⚡ Limited spots weekly — claim before we're fully booked!
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="name" className="sr-only">Your Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            placeholder="Your Name"
-            className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="email" className="sr-only">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="Email Address"
-            className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label htmlFor="phone" className="sr-only">Phone</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Your Name"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400 text-sm"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
             <input
               type="tel"
               id="phone"
               name="phone"
               required
               placeholder="Phone"
-              className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400 text-sm"
               value={formData.phone}
               onChange={handleChange}
             />
           </div>
+        </div>
+        
+        <div>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="Email Address"
+            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400 text-sm"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
           <div>
-             <label htmlFor="petName" className="sr-only">Pet's Name</label>
-             <input
+            <input
+              type="text"
+              id="city"
+              name="city"
+              required
+              placeholder="Your City"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400 text-sm"
+              value={formData.city}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <input
               type="text"
               id="petName"
               name="petName"
               placeholder="Pet's Name"
-              className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors text-gray-900 placeholder-gray-400 text-sm"
               value={formData.petName}
               onChange={handleChange}
             />
@@ -193,12 +204,11 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
         </div>
 
         <div className="relative">
-          <label htmlFor="service" className="sr-only">Service</label>
           <select
             id="service"
             name="service"
             required
-            className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors appearance-none text-gray-900"
+            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-colors appearance-none text-gray-900 text-sm"
             value={formData.service}
             onChange={handleChange}
           >
@@ -207,21 +217,18 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccess }) => {
               <option key={option} value={option}>{option}</option>
             ))}
           </select>
-          <ChevronDown className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none w-5 h-5" />
+          <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none w-4 h-4" />
         </div>
 
-        <Button fullWidth size="lg" variant="primary" type="submit" disabled={loading} className="mt-2 shadow-red-200">
+        <Button fullWidth size="lg" variant="primary" type="submit" disabled={loading} className="shadow-red-200">
           {loading ? (
             <Loader2 className="w-6 h-6 animate-spin" />
           ) : (
             "CLAIM $15 DISCOUNT"
           )}
         </Button>
-        <p className="text-xs text-center text-gray-500 mt-2">
+        <p className="text-xs text-center text-gray-500">
           Book instantly on the next page — takes less than 3 minutes!
-        </p>
-        <p className="text-xs text-center text-gray-400 mt-1">
-          We respect your privacy. No spam, ever.
         </p>
       </form>
     </div>

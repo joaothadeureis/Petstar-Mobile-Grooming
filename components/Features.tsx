@@ -39,7 +39,7 @@ export const Features: React.FC = () => {
   return (
     <Section id="why-us" pattern>
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-brand-primary mb-6 font-fun">Why Choose Pet Star?</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-brand-primary mb-6 font-fun">Why Choose Petstar?</h2>
         <p className="text-gray-600 text-xl font-light">We know grooming can be stressful for pets — especially anxious, senior, or reactive ones. Our mission is to make grooming calm, gentle, and something your pet actually enjoys.</p>
       </div>
 

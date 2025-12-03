@@ -90,19 +90,19 @@ try {
     echo "✅ SMTP configured\n\n";
 
     // Recipients
-    $mail->setFrom($smtp_email, "Pet Star - Test Email");
+    $mail->setFrom($smtp_email, "Petstar - Test Email");
     foreach ($recipients as $recipient) {
         $mail->addAddress($recipient);
     }
 
     // Email content
     $mail->isHTML(true);
-    $mail->Subject = "🧪 TEST EMAIL - Pet Star Landing Page";
+    $mail->Subject = "🧪 TEST EMAIL - Petstar Landing Page";
     $mail->Body = "
     <html>
     <body style='font-family: Arial, sans-serif; padding: 20px;'>
         <h1 style='color: #3A427F;'>✅ Email Test Successful!</h1>
-        <p>This is a test email from your Pet Star landing page.</p>
+        <p>This is a test email from your Petstar landing page.</p>
         <p>If you received this, your email configuration is working correctly.</p>
         <hr>
         <p style='color: #888; font-size: 12px;'>
@@ -112,7 +112,7 @@ try {
     </body>
     </html>
     ";
-    $mail->AltBody = "Test email from Pet Star Landing Page - Sent at " . date('Y-m-d H:i:s');
+    $mail->AltBody = "Test email from Petstar Landing Page - Sent at " . date('Y-m-d H:i:s');
 
     echo "📤 Sending email...\n\n";
     

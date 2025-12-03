@@ -121,13 +121,6 @@ export const Gallery: React.FC = () => {
                 item.isHighlight ? 'border-yellow-400 ring-2 ring-yellow-400/20' : 'border-gray-100'
               }`}
             >
-              {/* Highlight badge for Tartar Removal */}
-              {item.isHighlight && (
-                <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-brand-dark text-center py-1.5 font-bold text-xs flex items-center justify-center gap-1">
-                  <Star className="w-3 h-3 fill-current" /> Premium <Star className="w-3 h-3 fill-current" />
-                </div>
-              )}
-              
               <div className="relative flex h-[320px]">
                 <div className="w-1/2 relative border-r border-white h-full">
                   <img src={item.beforeImg} alt={`${item.petName} Before`} className="w-full h-[320px] object-cover" />
@@ -140,6 +133,11 @@ export const Gallery: React.FC = () => {
               </div>
               
               <div className="p-4 bg-white text-center">
+                {item.isHighlight && (
+                  <div className="inline-flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-brand-dark px-3 py-1 rounded-full font-bold text-xs mb-2">
+                    <Star className="w-3 h-3 fill-current" /> Premium <Star className="w-3 h-3 fill-current" />
+                  </div>
+                )}
                 <h3 className="font-bold text-lg text-brand-primary font-fun mb-1">{item.petName}</h3>
                 <p className="text-gray-600 text-sm" dangerouslySetInnerHTML={{ __html: item.description }}></p>
               </div>
@@ -159,48 +157,6 @@ export const Gallery: React.FC = () => {
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
-        </div>
-      </div>
-
-      {/* Van showcase + Meet Groomer */}
-      <div className="mt-12 rounded-3xl shadow-2xl overflow-hidden">
-        {/* Photos - contained in own block */}
-        <div className="grid grid-cols-2 gap-1">
-          <img 
-            src="/offer/2 van petstar.webp" 
-            alt="Petstar Mobile Grooming Van" 
-            className="w-full h-[350px] md:h-[400px] object-cover"
-          />
-          <img 
-            src="/offer/dog in front of van.webp" 
-            alt="Happy dog after grooming" 
-            className="w-full h-[350px] md:h-[400px] object-cover"
-          />
-        </div>
-        {/* Text - separate block with solid background */}
-        <div className="bg-brand-primary p-6 md:p-8 text-white">
-          <h3 className="text-2xl md:text-3xl font-bold mb-2 font-fun">Meet Your Groomer</h3>
-          <p className="text-yellow-300 text-xs md:text-sm font-semibold mb-4">
-            Maycon • 500+ pets groomed • Since 2019
-          </p>
-          <p className="text-blue-100 leading-relaxed mb-4 text-sm md:text-base">
-            Specialized in anxious, senior, and reactive pets. Certified in low-stress handling techniques. 
-            Our fully-equipped van brings the salon experience directly to your driveway.
-          </p>
-          <ul className="space-y-2 text-sm text-blue-100">
-            <li className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-brand-secondary rounded-full flex-shrink-0"></span>
-              Climate controlled for all seasons
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-brand-secondary rounded-full flex-shrink-0"></span>
-              Professional grooming equipment
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-brand-secondary rounded-full flex-shrink-0"></span>
-              Sanitized between each appointment
-            </li>
-          </ul>
         </div>
       </div>
     </Section>
